@@ -51,6 +51,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
                                 src={`/products/${image}`}
                                 alt={title}
                                 className="rounded-lg object-fill"
+                                priority
                             />
                         </SwiperSlide>
                     ))

@@ -1,6 +1,8 @@
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector } from "@/components";
+export const revalidate = 604800; //7 dias
+import { getProductBySlug } from "@/actions";
+import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel } from "@/components";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -8,11 +10,30 @@ interface Props {
     slug: string;
   }
 }
-export default function SlugPage({ params }: Props) {
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const slug = params.slug
+
+  const product = await getProductBySlug(slug)
+
+  // const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: product?.title ?? 'Producto',
+    description: product?.description ?? 'Descripcion',
+    openGraph: {
+      title: product?.title ?? 'Producto',
+      description: product?.description ?? 'Descripcion',
+      images: [`/products/${product?.images[1]}`],
+    },
+  }
+}
+
+export default async function ProductBySlugPage({ params }: Props) {
 
   const { slug } = params
-  const product = initialData.products.find(product => product.slug === slug);
-
+  const product = await getProductBySlug(slug);
+  console.log(product);
   if (!product) {
     notFound();
   }
@@ -25,9 +46,9 @@ export default function SlugPage({ params }: Props) {
 
         {/* Mobile Slideshow */}
         <ProductMobileSlideshow
-        title={product.title}
-        images={product.images}
-        className="block md:hidden"
+          title={product.title}
+          images={product.images}
+          className="block md:hidden"
         />
 
         {/* Desktop Slideshow */}
@@ -42,9 +63,13 @@ export default function SlugPage({ params }: Props) {
 
       {/* Detalles */}
       <div className="cols-span-1 px-5 ">
+
+        <StockLabel slug={slug} />
+
         <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
           {product.title}
         </h1>
+
         <p className="text-lg mb-5">${product.price}</p>
 
         {/* Selector de tallas */}
