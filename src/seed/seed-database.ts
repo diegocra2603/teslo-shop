@@ -4,9 +4,14 @@ import { initialData } from './seed';
 async function main() {
 
     //1. Borrar registros previos
+    await prisma.user.deleteMany();
     await prisma.productImage.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
+
+    await prisma.user.createMany({
+        data: initialData.users
+    })
 
     // Categorias
     await prisma.category.createMany({
@@ -42,8 +47,6 @@ async function main() {
             data: imagesData
         })
     })
-
-
 
     console.log('Seed Ejecutado')
 }
