@@ -6,7 +6,7 @@ interface State {
     address: Address
 
     //Methods
-    setAddress: (address: Address) => void;
+    setAddress: (address: State['address']) => void;
 }
 
 export const useAddressStore = create<State>()(
@@ -22,7 +22,7 @@ export const useAddressStore = create<State>()(
                 country: '',
                 phone: '',
             },
-            
+
             setAddress(address) {
                 set({ address })
             },
