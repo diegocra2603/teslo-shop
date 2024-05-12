@@ -1,5 +1,5 @@
 import { getOrderById } from "@/actions";
-import { Title } from "@/components";
+import { OrderStatus, PaypalButton, Title } from "@/components";
 import { currencyFormat } from "@/utils";
 import clsx from "clsx";
 import Image from "next/image";
@@ -18,7 +18,7 @@ export default async function OrderPage({ params }: Props) {
 
   const { order, ok } = await getOrderById(id)
 
-  if (!ok || order == null ) {
+  if (!ok || order == null) {
     notFound();
   }
 
@@ -37,21 +37,11 @@ export default async function OrderPage({ params }: Props) {
           {/* Cart */}
           <div className="flex flex-col mt-5">
 
-            <div className={
-              clsx(
-                "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5", {
-                'bg-red-500': !order.isPaid,
-                'bg-green-700': order.isPaid
-              }
-              )
-            }>
-              <IoCardOutline size={30} />
-              <span className="mx-2">Pagada</span>
-            </div>
+            <OrderStatus isPaid={order.isPaid} />
 
             {/* Items */}
             {
-              order.OrderItem.map(({product,size, quantity}) => (
+              order.OrderItem.map(({ product, size, quantity }) => (
                 <div key={`${product.slug}-${size}`} className="flex mb-5">
                   <Image
                     src={`/products/${product.ProductImage[0].url}`}
@@ -83,12 +73,12 @@ export default async function OrderPage({ params }: Props) {
 
             <h2 className="text-2xl font-bold mb-2">Dirección de entrega</h2>
             <div className="mb-10">
-            <p className="text-xl">{order.OrderAddress?.firstName} {order.OrderAddress?.lastName}</p>
-                <p>{order.OrderAddress?.address}</p>
-                <p>{order.OrderAddress?.address2}</p>
-                <p>{order.OrderAddress?.postalCode}</p>
-                <p>{order.OrderAddress?.city}, {order.OrderAddress?.country.name}</p>
-                <p>{order.OrderAddress?.phone}</p>
+              <p className="text-xl">{order.OrderAddress?.firstName} {order.OrderAddress?.lastName}</p>
+              <p>{order.OrderAddress?.address}</p>
+              <p>{order.OrderAddress?.address2}</p>
+              <p>{order.OrderAddress?.postalCode}</p>
+              <p>{order.OrderAddress?.city}, {order.OrderAddress?.country.name}</p>
+              <p>{order.OrderAddress?.phone}</p>
             </div>
 
             {/* Divider */}
@@ -97,31 +87,27 @@ export default async function OrderPage({ params }: Props) {
 
             <h2 className="text-2xl mb-2">Resumen de Orden</h2>
             <div className="grid grid-cols-2">
-                <span>No. Productos</span>
-                <span className="text-right">{order.OrderItem.length === 1 ? '1 artículo' : `${order.OrderItem.length} artículos`} </span>
+              <span>No. Productos</span>
+              <span className="text-right">{order.OrderItem.length === 1 ? '1 artículo' : `${order.OrderItem.length} artículos`} </span>
 
-                <span>Subtotal</span>
-                <span className="text-right">{currencyFormat(order.subTotal)}</span>
+              <span>Subtotal</span>
+              <span className="text-right">{currencyFormat(order.subTotal)}</span>
 
-                <span>Impuestos (15%)</span>
-                <span className="text-right">{currencyFormat(order.tax)}</span>
+              <span>Impuestos (15%)</span>
+              <span className="text-right">{currencyFormat(order.tax)}</span>
 
-                <span className="mt-5 text-2xl">Total:</span>
-                <span className="mt-5 text-2xl text-right">{currencyFormat(order.total)}</span>
+              <span className="mt-5 text-2xl">Total:</span>
+              <span className="mt-5 text-2xl text-right">{currencyFormat(order.total)}</span>
             </div>
             <div className="mt-5 mb-2 w-full">
 
-              <div className={
-                clsx(
-                  "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5", {
-                    'bg-red-500': !order.isPaid,
-                    'bg-green-700': order.isPaid
-                }
-                )
-              }>
-                <IoCardOutline size={30} />
-                <span className="mx-2">Pagada</span>
-              </div>
+              {
+                order.isPaid 
+                  ? (<OrderStatus isPaid={order.isPaid} />)
+                  : (<PaypalButton orderId={order.id} amount={order.total} />)
+              }
+
+
 
             </div>
           </div>

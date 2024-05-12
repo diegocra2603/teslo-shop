@@ -17,9 +17,9 @@ export const Sidebar = () => {
     const isAdmin = session?.user.role === 'admin';
 
     const handlerOnLogout = () => {
-        window.location.replace('/');
         closeMenu();
         logout();
+        window.location.replace('/');
     }
 
     return (
