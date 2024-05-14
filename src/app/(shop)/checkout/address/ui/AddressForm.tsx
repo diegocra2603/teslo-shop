@@ -50,7 +50,7 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
             reset(address)
         }
 
-    }, [address])
+    }, [address, reset])
 
     const onSubmit = async (data: FormInputs) => {
         

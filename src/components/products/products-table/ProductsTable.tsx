@@ -1,8 +1,8 @@
-import { Product } from "@/interfaces"
+import { Product, ProductImage } from "@/interfaces"
 import { ProductTableItem } from "../product-table-item/ProductTableItem";
 
 interface Props {
-    products: Product[];
+    products: any;
 }
 
 export const ProductsTable = ({ products } : Props) => {
@@ -33,7 +33,7 @@ export const ProductsTable = ({ products } : Props) => {
                 </thead>
                 <tbody>
                     {
-                        products.map(product =>
+                        products.map((product: any) =>
                             <ProductTableItem key={product.id} product={product} />
                         )
                     }

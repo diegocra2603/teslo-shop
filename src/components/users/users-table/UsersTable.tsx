@@ -27,7 +27,7 @@ export const UsersTable = ({ users }: Props) => {
                 <tbody>
                     {
                         users.map(user =>
-                            <UserTableItem user={user} />
+                            <UserTableItem key={user.id} user={user} />
                         )
                     }
                 </tbody>

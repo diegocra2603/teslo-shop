@@ -2,13 +2,14 @@ export const revalidate = 60;
 import { notFound, redirect } from "next/navigation";
 import { ProductGrid } from '../../../../components/products/product-grid/ProductGrid';
 import { Pagination, Title } from "@/components";
-import { Category } from '../../../../interfaces/product.interface';
 import { getPaginatedProductsWithImages } from "@/actions";
+import { Category } from "@/interfaces";
+import { Gender } from "@prisma/client";
 
 
 interface Props {
   params: {
-    gender: Category;
+    gender: Gender;
   }
   searchParams: {
     page?: string;
@@ -27,7 +28,7 @@ export default async function GenderPage({ params, searchParams }: Props) {
   }
 
 
-  const labels: Record<Category, string> = {
+  const labels: Record<Gender, string> = {
     'men': 'para Hombres',
     'women': 'para Mujeres',
     'kid': 'para Niños',
