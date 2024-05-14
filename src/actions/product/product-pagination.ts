@@ -6,7 +6,7 @@ import { Gender } from "@prisma/client";
 interface PaginationOptions {
     page?: number;
     take?: number;
-    gender: Gender;
+    gender?: Gender;
 }
 
 export const getPaginatedProductsWithImages = async ({

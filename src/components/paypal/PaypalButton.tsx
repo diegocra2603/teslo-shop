@@ -54,16 +54,18 @@ export const PaypalButton = ({ orderId, amount }: Props) => {
 
         const details = await actions.order?.capture();
 
-        if(!details) return;
+        if (!details) return;
 
-        await paypalCheckPayment( details.id! );
+        await paypalCheckPayment(details.id!);
 
     }
 
     return (
-        <PayPalButtons
-            createOrder={createOrder}
-            onApprove={onApprove}
-        />
+        <div className="relative z-0">
+            <PayPalButtons
+                createOrder={createOrder}
+                onApprove={onApprove}
+            />
+        </div>
     )
 }
