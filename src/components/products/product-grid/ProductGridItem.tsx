@@ -1,4 +1,5 @@
 'use client'
+import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { Product } from "@/interfaces"
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +24,7 @@ export const ProductGridItem = ({ product }: Props) => {
     return (
         <div className="rounded-md overflow-hidden fade-in">
             <Link href={`/product/${product.slug}`} >
-                <Image
+                {/* <Image
                     src={`/products/${displayImage}`}
                     alt={product.title}
                     className="w-full object-over rounded shadow-md"
@@ -31,6 +32,17 @@ export const ProductGridItem = ({ product }: Props) => {
                     height={500}
                     onMouseEnter={handlerMouseEnter}
                     onMouseLeave={handlerMouseLeave}
+                /> */}
+                <ProductImage
+                    src={displayImage}
+                    alt={product.title}
+                    width={500}
+                    height={500}
+                    className="w-full object-over rounded shadow-md"
+                    style={{
+                      width: 500,
+                        height: 500  
+                    }}
                 />
             </Link>
 
