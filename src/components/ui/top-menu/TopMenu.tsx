@@ -4,6 +4,7 @@ import { useCartStore, useUIStore } from "@/store";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
+import Image from "next/image";
 
 export const TopMenu = () => {
 
@@ -23,8 +24,7 @@ export const TopMenu = () => {
             <div>
                 <Link
                     href="/">
-                    <span className={`${titleFont.className} antialiased font-bold`}>Teslo</span>
-                    <span> | Shop</span>
+                    <Image src="/imgs/logo.png" alt="Logo" width={100} height={100} />
                 </Link>
             </div>
 

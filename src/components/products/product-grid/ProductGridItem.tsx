@@ -1,6 +1,7 @@
 'use client'
 import { ProductImage } from "@/components/product/product-image/ProductImage";
 import { Product } from "@/interfaces"
+import { currencyFormat } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -51,7 +52,7 @@ export const ProductGridItem = ({ product }: Props) => {
                 >
                     {product.title}
                 </Link>
-                <span className="font-bold">${product.price}</span>
+                <span className="font-bold">{currencyFormat(product.price)}</span>
             </div>
         </div>
     )
