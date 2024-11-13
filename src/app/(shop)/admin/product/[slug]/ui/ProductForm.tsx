@@ -7,6 +7,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 interface Props {
   product: Partial<Product> & { ProductImage?: IProductImage[] };
@@ -93,15 +94,18 @@ export const ProductForm = ({ product, categories }: Props) => {
     const { ok, product: savedProduct } = await createUpdateProduct(formData);
 
     if(!ok){
+      toast.error('Error al guardar el producto');
       return;
     }
 
+    toast.success('Producto guardado correctamente');
     router.replace(`/admin/product/${savedProduct?.slug}`)
 
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3">
+      <Toaster />
       {/* Textos */}
       <div className="w-full">
         <div className="flex flex-col mb-2">

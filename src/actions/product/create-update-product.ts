@@ -60,35 +60,45 @@ export const createUpdateProduct = async (formData: FormData) => {
                     data: dataToSave
                 })
 
+                console.log('Actualizado');
+                console.log({ product });
+
             } else {
                 //Crear
                 product = await tx.product.create({
                     data: dataToSave
                 })
+
+                console.log('Creado');
+                console.log({ product });
             }
 
             //Proceso de carga y guardado de imagens
             //Recorrer las imagenes y guardarlas
-            if (formData.getAll('images')) {
-                const images = await uploadImages(formData.getAll('images') as File[]);
-                
-                if(!images) {
-                    throw new Error('No se pudo cargar las imágenes, rollingback');
-                }
-
-                await prisma.productImage.createMany({
-                    data: images.map(image => ({
-                        url: image!,
-                        productId: product.id
-                    }))
-                })
-
-            }
+            
 
             return {
                 product
             }
         })
+
+        if (formData.getAll('images')) {
+            const images = await uploadImages(formData.getAll('images') as File[]);
+
+            if(!images) {
+                throw new Error('No se pudo cargar las imágenes, rollingback');
+            }
+
+            const createImages = await prisma.productImage.createMany({
+                data: images.map(image => ({
+                    url: image!,
+                    productId: prismaTx.product.id
+                }))
+            })
+
+            console.log({createImages});
+
+        }
 
         //TODO REVALIDATE PATH
         revalidatePath('/admin/products')
@@ -101,6 +111,7 @@ export const createUpdateProduct = async (formData: FormData) => {
         }
 
     } catch (error) {
+        console.log(error);
         return {
             ok: false,
             message: 'No se realizo lo solicitado'
