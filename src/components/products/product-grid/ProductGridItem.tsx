@@ -39,10 +39,6 @@ export const ProductGridItem = ({ product }: Props) => {
                     width={500}
                     height={500}
                     className="w-full object-over rounded shadow-md"
-                    style={{
-                      width: 500,
-                        height: 500  
-                    }}
                 />
             </Link>
 
