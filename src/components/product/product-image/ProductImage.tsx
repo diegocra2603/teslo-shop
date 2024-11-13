@@ -20,7 +20,9 @@ export const ProductImage = ({
     width,
     height,
     priority,
-    style
+    style,
+    onMouseEnter,
+    onMouseLeave
 }: Props) => {
 
     const localSrc = (src)
@@ -38,6 +40,9 @@ export const ProductImage = ({
             className={className}
             priority={priority ?? false}
             style={style}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+
         />
     )
 }
