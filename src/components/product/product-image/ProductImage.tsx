@@ -9,6 +9,8 @@ interface Props {
     width: number;
     height: number;
     priority?: boolean
+    onMouseEnter?: React.MouseEventHandler<HTMLImageElement>;
+    onMouseLeave?: React.MouseEventHandler<HTMLImageElement>;
 }
 
 export const ProductImage = ({

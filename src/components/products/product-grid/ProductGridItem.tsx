@@ -39,6 +39,8 @@ export const ProductGridItem = ({ product }: Props) => {
                     width={500}
                     height={500}
                     className="w-full object-over rounded shadow-md"
+                    onMouseEnter={handlerMouseEnter}
+                    onMouseLeave={handlerMouseLeave}
                 />
             </Link>
 
