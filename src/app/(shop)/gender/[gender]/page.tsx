@@ -29,8 +29,8 @@ export default async function GenderPage({ params, searchParams }: Props) {
 
 
   const labels: Record<Gender, string> = {
-    'men': 'para Hombres',
-    'women': 'para Mujeres',
+    'men': 'Flores / Arreglos',
+    'women': 'Regalos',
     'kid': 'para Niños',
     'unisex': 'para Todos'
   }
@@ -42,7 +42,7 @@ export default async function GenderPage({ params, searchParams }: Props) {
   return (
     <>
       <Title
-        title={`Artículos ${labels[gender]}`}
+        title={`${labels[gender]}`}
         subtitle="Todos los productos"
         className="mb-2"
       />
